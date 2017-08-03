@@ -172,8 +172,10 @@ RCT_EXPORT_METHOD(login:(RCTPromiseResolveBlock)resolve
                                                        style:UIAlertActionStyleCancel
                                                        handler:cancelActionHandler];
                         [alert addAction:cancelAction];
+                      
+                        UIViewController *rootViewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+                        [rootViewController presentViewController:alert animated:YES completion:nil];
 
-                        [RCTPresentedViewController() presentViewController:alert animated:YES completion:nil];
                     } else {
                         __strong typeof(self) strongSelf = weakSelf;
                         [strongSelf webBasedLogin:resolve rejecter:reject];
