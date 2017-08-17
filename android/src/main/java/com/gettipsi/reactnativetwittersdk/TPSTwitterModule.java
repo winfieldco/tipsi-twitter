@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.BaseActivityEventListener;
 import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.Promise;
@@ -28,7 +29,7 @@ import io.fabric.sdk.android.Fabric;
 /**
  * This is a {@link NativeModule} that allows JS to use LoginManager of Facebook Android SDK.
  */
-public class TPSTwitterModule extends ReactContextBaseJavaModule implements LifecycleEventListener, ActivityEventListener {
+public class TPSTwitterModule extends ReactContextBaseJavaModule implements LifecycleEventListener {
 
   private static final String TAG = TPSTwitterModule.class.getSimpleName();
   private ReadableMap currentData;
@@ -36,8 +37,17 @@ public class TPSTwitterModule extends ReactContextBaseJavaModule implements Life
 
   public TPSTwitterModule(ReactApplicationContext reactContext) {
     super(reactContext);
+    final ActivityEventListener mActivityEventListener = new BaseActivityEventListener() {
+      @Override
+      public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "onActivityResult");
+        if (requestCode == getTwitterAuthClient().getRequestCode())
+          getTwitterAuthClient().onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(activity, requestCode, resultCode, data);
+      }
+    };
     reactContext.addLifecycleEventListener(this);
-    reactContext.addActivityEventListener(this);
+    reactContext.addActivityEventListener(mActivityEventListener);
   }
 
   @Override
@@ -81,13 +91,6 @@ public class TPSTwitterModule extends ReactContextBaseJavaModule implements Life
         }
       });
 
-  }
-
-  @Override
-  public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    Log.d(TAG, "onActivityResult");
-    if (requestCode == getTwitterAuthClient().getRequestCode())
-      getTwitterAuthClient().onActivityResult(requestCode, resultCode, data);
   }
 
   @Override
