@@ -110,6 +110,15 @@ RCT_EXPORT_METHOD(init:(NSDictionary*)twitterCredentials
 RCT_EXPORT_METHOD(login:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
     if (self.consumerKey && self.consumerSecret) {
+
+        // XXX iOS 11 removed twitter accounts, so we are forced to always
+        // use the web version instead.
+
+        [self webBasedLogin:resolve rejecter:reject];
+
+
+        /*
+
         ACAccountStore *account = [[ACAccountStore alloc] init];
         ACAccountType *accountType = [account accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
 
@@ -187,6 +196,9 @@ RCT_EXPORT_METHOD(login:(RCTPromiseResolveBlock)resolve
                 }
             });
         }];
+
+        */
+
     } else {
         NSError *rejectError = [self buildErrorWithCode:TPSTwitterErrorNoAuthConfiguration localizedDescription:NSLocalizedString(@"Before call login you have to call init with Twitter application's consumer key and secret", nil)];
         reject([self buildErrorCodeForError:rejectError], rejectError.localizedDescription, rejectError);
