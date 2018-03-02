@@ -1,6 +1,6 @@
 {
   "name": "tipsi-twitter",
-  "version": "1.0.0-post3",
+  "version": "1.0.0-post4",
   "description": "Twitter sdk for react-native",
   "main": "src/index.js",
   "scripts": {
