@@ -246,6 +246,11 @@
 		58B511F01A9E6C8500147676 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"${SRCROOT}/../../../ios/Pods/TwitterCore/iOS",
+					"${SRCROOT}/../../../ios/Pods/TwitterKit/iOS/**",
+				);
+				HEADER_SEARCH_PATHS = "${SRCROOT}/../../../ios/Pods/Headers/Public/**";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = TPSTwitterModule;
 				SKIP_INSTALL = YES;
@@ -255,6 +260,11 @@
 		58B511F11A9E6C8500147676 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"${SRCROOT}/../../../ios/Pods/TwitterCore/iOS",
+					"${SRCROOT}/../../../ios/Pods/TwitterKit/iOS/**",
+				);
+				HEADER_SEARCH_PATHS = "${SRCROOT}/../../../ios/Pods/Headers/Public/**";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = TPSTwitterModule;
 				SKIP_INSTALL = YES;
